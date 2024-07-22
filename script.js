@@ -64,9 +64,18 @@ btnScrollTo.addEventListener('click', function(e){
 })
 
 // Paginating nav links
-document.querySelectorAll('.nav__link').forEach((el) => el.addEventListener('click', function(e){
-  e.preventDefault(); 
-  const id = this.getAttribute('href'); 
-  document.querySelector(id).scrollIntoView({behavior: 'smooth'}); 
-}))
+// document.querySelectorAll('.nav__link').forEach((el) => el.addEventListener('click', function(e){
+//   e.preventDefault(); 
+//   const id = this.getAttribute('href'); 
+//   document.querySelector(id).scrollIntoView({behavior: 'smooth'}); 
+// }))
 
+
+document.querySelector('.nav__links').addEventListener('click', function(e){
+  e.preventDefault(); 
+  if(e.target.classList.contains('nav__link')){
+    const id = e.target.getAttribute('href'); 
+    const targetedSection = document.querySelector(id); 
+    targetedSection.scrollIntoView({behavior: 'smooth'});
+  }
+})
