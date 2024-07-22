@@ -33,15 +33,7 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-// Practice
-
 const header = document.querySelector('.header'); 
-// const allSections = document.querySelectorAll('.section'); 
-// console.log(allSections); 
-
-// document.getElementById('section--1'); 
-// const allButtons = document.getElementsByTagName('button'); 
-// console.log(allButtons); 
 
 const message = document.createElement('div'); 
 message.classList.add('cookie-message'); 
@@ -64,16 +56,17 @@ btnScrollTo.addEventListener('click', function(e){
   const sec1coords = section1.getBoundingClientRect(); 
   console.log(sec1coords); 
 
-  console.log(e.target.getBoundingClientRect()); // shows coordinates of the element
+  console.log(e.target.getBoundingClientRect());
 
   console.log('height/width viewport', document.documentElement.clientHeight, document.documentElement.clientWidth); 
 
-  // Scrolling
-  // window.scrollTo({
-  //   left: sec1coords.left + window.pageXOffset, 
-  //   top: sec1coords.top + window.pageYOffset,
-  //   behavior: 'smooth'
-  // })
-
   section1.scrollIntoView({behavior: 'smooth'}); 
 })
+
+// Paginating nav links
+document.querySelectorAll('.nav__link').forEach((el) => el.addEventListener('click', function(e){
+  e.preventDefault(); 
+  const id = this.getAttribute('href'); 
+  document.querySelector(id).scrollIntoView({behavior: 'smooth'}); 
+}))
+
