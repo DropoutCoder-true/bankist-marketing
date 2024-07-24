@@ -70,16 +70,6 @@ btnScrollTo.addEventListener('click', function(e){
 //   document.querySelector(id).scrollIntoView({behavior: 'smooth'}); 
 // }))
 
-
-document.querySelector('.nav__links').addEventListener('click', function(e){
-  e.preventDefault(); 
-  if(e.target.classList.contains('nav__link')){
-    const id = e.target.getAttribute('href'); 
-    const targetedSection = document.querySelector(id); 
-    targetedSection.scrollIntoView({behavior: 'smooth'});
-  }
-})
-
 // // Dom traversing practice
 // const h1 = document.querySelector('h1'); 
 // console.log(h1.querySelectorAll(".highlight")); 
@@ -99,3 +89,32 @@ document.querySelector('.nav__links').addEventListener('click', function(e){
 // console.log(h1.previousSibling); 
 // console.log(h1.nextSibling);
 // console.log(h1.parentElement.children); 
+
+document.querySelector('.nav__links').addEventListener('click', function(e){
+  e.preventDefault(); 
+  if(e.target.classList.contains('nav__link')){
+    const id = e.target.getAttribute('href'); 
+    const targetedSection = document.querySelector(id); 
+    targetedSection.scrollIntoView({behavior: 'smooth'});
+  }
+})
+
+// Tabbed component
+const tabs = document.querySelectorAll(".operations__tab"); 
+const tabsContainer = document.querySelector(".operations__tab-container"); 
+const tabsContent = document.querySelectorAll(".operations__content");
+
+tabsContainer.addEventListener("click", function(e){
+  const clicked = e.target.closest(".operations__tab"); 
+  // console.log(clicked); 
+
+  // Active Tab
+  if(!clicked) return; 
+  tabs.forEach(tab => tab.classList.remove("operations__tab--active")); 
+  clicked.classList.add("operations__tab--active"); 
+
+  // Active Tab Content
+  const currentContent = document.querySelector(`.operations__content--${clicked.getAttribute("data-tab")}`); 
+  tabsContent.forEach(tab => tab.classList.remove("operations__content--active")); 
+  currentContent.classList.add("operations__content--active"); 
+})
