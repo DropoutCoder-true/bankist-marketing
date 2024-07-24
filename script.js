@@ -7,6 +7,9 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const header = document.querySelector('.header'); 
+const message = document.createElement('div'); 
+const nav = document.querySelector(".nav"); 
 
 const openModal = function (e) {
   e.preventDefault(); 
@@ -33,9 +36,7 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-const header = document.querySelector('.header'); 
-
-const message = document.createElement('div'); 
+// Cookie message 
 message.classList.add('cookie-message'); 
 message.innerHTML = 'We use cookied for improved functionality and analytics, <button class="btn btn--close-cookie"> Got it! </button>'; 
 
@@ -49,46 +50,14 @@ document.querySelector('.btn--close-cookie')
 message.style.backgroundColor = "#37383d"; 
 message.style.width = "120%"; 
 
+
+// Learn more scrolling section
 const btnScrollTo = document.querySelector('.btn--scroll-to'); 
 const section1 = document.querySelector('#section--1'); 
 
 btnScrollTo.addEventListener('click', function(e){
-  const sec1coords = section1.getBoundingClientRect(); 
-  console.log(sec1coords); 
-
-  console.log(e.target.getBoundingClientRect());
-
-  console.log('height/width viewport', document.documentElement.clientHeight, document.documentElement.clientWidth); 
-
   section1.scrollIntoView({behavior: 'smooth'}); 
 })
-
-// Paginating nav links
-// document.querySelectorAll('.nav__link').forEach((el) => el.addEventListener('click', function(e){
-//   e.preventDefault(); 
-//   const id = this.getAttribute('href'); 
-//   document.querySelector(id).scrollIntoView({behavior: 'smooth'}); 
-// }))
-
-// // Dom traversing practice
-// const h1 = document.querySelector('h1'); 
-// console.log(h1.querySelectorAll(".highlight")); 
-// console.log(h1.childNodes); 
-// console.log(h1.children); 
-// h1.firstElementChild.style.color = "white"; 
-// h1.lastElementChild.style.color = "orange"; 
-
-// // Going upwards: parent element
-// console.log(h1.parentNode); 
-// console.log(h1.parentElement); 
-// h1.closest(".header").style.backgroundColor = "pink"; 
-
-// // Going sideways
-// console.log(h1.previousElementSibling); 
-// console.log(h1.nextElementSibling); 
-// console.log(h1.previousSibling); 
-// console.log(h1.nextSibling);
-// console.log(h1.parentElement.children); 
 
 document.querySelector('.nav__links').addEventListener('click', function(e){
   e.preventDefault(); 
@@ -106,15 +75,33 @@ const tabsContent = document.querySelectorAll(".operations__content");
 
 tabsContainer.addEventListener("click", function(e){
   const clicked = e.target.closest(".operations__tab"); 
-  // console.log(clicked); 
 
   // Active Tab
   if(!clicked) return; 
   tabs.forEach(tab => tab.classList.remove("operations__tab--active")); 
   clicked.classList.add("operations__tab--active"); 
-
+  
   // Active Tab Content
   const currentContent = document.querySelector(`.operations__content--${clicked.getAttribute("data-tab")}`); 
   tabsContent.forEach(tab => tab.classList.remove("operations__content--active")); 
   currentContent.classList.add("operations__content--active"); 
 })
+
+// Nav hover animation
+const handleHover = function(e){
+  console.log(this, e.currentTarget); 
+  if(e.target.classList.contains("nav__link")){
+    const link = e.target; 
+    const siblings = link.closest(".nav").querySelectorAll(".nav__link");
+    const logo = link.closest(".nav").querySelector(".nav__logo"); 
+    siblings.forEach(el => {
+      if(el != link){
+        el.style.opacity = this; 
+      }
+      logo.style.opacity = this; 
+    })
+  }
+}
+
+nav.addEventListener("mouseover", handleHover.bind(0.5)); 
+nav.addEventListener("mouseout", handleHover.bind(1)); 
