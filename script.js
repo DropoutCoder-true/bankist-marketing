@@ -170,7 +170,7 @@ let currSlide = 0;
 const maxSlides = slides.length-1; 
 const minSlides = slides[0]; 
 
-// Next Slide
+// Slide Functions
 const goToSlide = function(slide){
   slides.forEach((sl, i) => {
     sl.style.transform = `translateX(${100 * (i - slide)}%)`
@@ -197,6 +197,11 @@ const prevSlide = function(){
   }
   goToSlide(currSlide); 
 }
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "ArrowRight") nextSlide(); 
+  if(e.key === "ArrowLeft") prevSlide(); 
+})
 
 btnRight.addEventListener("click", nextSlide); 
 btnLeft.addEventListener("click", prevSlide); 
