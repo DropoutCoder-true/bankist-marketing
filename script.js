@@ -24,9 +24,6 @@ const closeModal = function () {
 
 btnsOpenModal.forEach(el => el.addEventListener('click', openModal)); 
 
-// for (let i = 0; i < btnsOpenModal.length; i++)
-//   btnsOpenModal[i].addEventListener('click', openModal);
-
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
 
@@ -123,32 +120,31 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 headerObserver.observe(header); 
 
 // section animations
-const revealSection = function(entries, observer){
-  const [entry] = entries; 
-  if(!entry.isIntersecting) return 
-  entry.target.classList.remove("section--hidden"); 
-  observer.unobserve(entry.target); 
-}
+// const revealSection = function(entries, observer){
+//   const [entry] = entries; 
+//   if(!entry.isIntersecting) return 
+//   entry.target.classList.remove("section--hidden"); 
+//   observer.unobserve(entry.target); 
+// }
 
-const allSections = document.querySelectorAll(".section"); 
+// const allSections = document.querySelectorAll(".section"); 
 
-const sectionObserver = new IntersectionObserver(revealSection, {
-  root: null, 
-  threshold: 0, 
-  rootMargin: "200px"
-}); 
+// const sectionObserver = new IntersectionObserver(revealSection, {
+//   root: null, 
+//   threshold: 0, 
+//   rootMargin: "200px"
+// }); 
 
-allSections.forEach((sec) => {
-  sectionObserver.observe(sec); 
-  sec.classList.add("section--hidden"); 
-})
+// allSections.forEach((sec) => {
+//   sectionObserver.observe(sec); 
+//   sec.classList.add("section--hidden");
+// })
 
 // lazy image loading 
 const imgTargets = document.querySelectorAll("img[data-src]"); 
 
 const revealImage = function(entries, observer){
   const [entry] = entries; 
-  console.log(entry); 
   if(!entry.isIntersecting) return; 
   entry.target.src = entry.target.dataset.src; 
   entry.target.addEventListener("load", function(){
@@ -159,7 +155,48 @@ const revealImage = function(entries, observer){
 
 const imgObserver = new IntersectionObserver(revealImage, {
   root: null, 
-  threshold: 0.14
+  threshold: 0.14, 
+  rootMargin: "200px"
 })
 
 imgTargets.forEach(img => imgObserver.observe(img)); 
+
+// Image Slider 
+const slides = document.querySelectorAll(".slide");
+const btnLeft = document.querySelector(".slider__btn--left"); 
+const btnRight = document.querySelector(".slider__btn--right"); 
+
+let currSlide = 0; 
+const maxSlides = slides.length-1; 
+const minSlides = slides[0]; 
+
+// Next Slide
+const goToSlide = function(slide){
+  slides.forEach((sl, i) => {
+    sl.style.transform = `translateX(${100 * (i - slide)}%)`
+  }); 
+}
+goToSlide(0); 
+
+const nextSlide = function(){
+  if(currSlide === maxSlides){
+    currSlide = 0; 
+  } else {
+    currSlide++; 
+  }
+  slides.forEach((s, i) => {
+    s.style.transform = `translate(${100 * (i - currSlide)}%)`; 
+  })
+}; 
+
+const prevSlide = function(){
+  if(currSlide === 0){
+    currSlide = maxSlides; 
+  } else {
+    currSlide--; 
+  }
+  goToSlide(currSlide); 
+}
+
+btnRight.addEventListener("click", nextSlide); 
+btnLeft.addEventListener("click", prevSlide); 
