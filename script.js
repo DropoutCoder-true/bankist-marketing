@@ -170,6 +170,33 @@ let currSlide = 0;
 const maxSlides = slides.length-1; 
 const minSlides = slides[0]; 
 
+// Creating dots for slider
+const dotContainer = document.querySelector(".dots"); 
+
+const createDots = function(){
+  slides.forEach((_, i) => {
+    dotContainer.insertAdjacentHTML("beforeend", `<button class="dots__dot" data-slide="${i}"></button>`); 
+  })
+}
+createDots(); 
+
+dotContainer.addEventListener("click", function(e){
+  if(e.target.classList.contains("dots__dot")){ 
+    const {slide} = e.target.dataset; 
+    goToSlide(slide); 
+    activateDot(slide); 
+  } 
+})
+
+// Setting active slide and active dot 
+const activateDot = function(slide){
+  const dots = document.querySelectorAll(".dots__dot"); 
+  dots.forEach(dot => dot.classList.remove("dots__dot--active")); 
+  
+  document.querySelector(`.dots__dot[data-slide="${slide}"]`).classList.add("dots__dot--active"); 
+}
+activateDot(0); 
+
 // Slide Functions
 const goToSlide = function(slide){
   slides.forEach((sl, i) => {
@@ -187,6 +214,7 @@ const nextSlide = function(){
   slides.forEach((s, i) => {
     s.style.transform = `translate(${100 * (i - currSlide)}%)`; 
   })
+  activateDot(currSlide); 
 }; 
 
 const prevSlide = function(){
@@ -196,6 +224,7 @@ const prevSlide = function(){
     currSlide--; 
   }
   goToSlide(currSlide); 
+  activateDot(currSlide); 
 }
 
 document.addEventListener("keydown", function(e){
