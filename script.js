@@ -120,25 +120,25 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 headerObserver.observe(header); 
 
 // section animations
-// const revealSection = function(entries, observer){
-//   const [entry] = entries; 
-//   if(!entry.isIntersecting) return 
-//   entry.target.classList.remove("section--hidden"); 
-//   observer.unobserve(entry.target); 
-// }
+const revealSection = function(entries, observer){
+  const [entry] = entries; 
+  if(!entry.isIntersecting) return 
+  entry.target.classList.remove("section--hidden"); 
+  observer.unobserve(entry.target); 
+}
 
-// const allSections = document.querySelectorAll(".section"); 
+const allSections = document.querySelectorAll(".section"); 
 
-// const sectionObserver = new IntersectionObserver(revealSection, {
-//   root: null, 
-//   threshold: 0, 
-//   rootMargin: "200px"
-// }); 
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null, 
+  threshold: 0, 
+  rootMargin: "200px"
+}); 
 
-// allSections.forEach((sec) => {
-//   sectionObserver.observe(sec); 
-//   sec.classList.add("section--hidden");
-// })
+allSections.forEach((sec) => {
+  sectionObserver.observe(sec); 
+  sec.classList.add("section--hidden");
+})
 
 // lazy image loading 
 const imgTargets = document.querySelectorAll("img[data-src]"); 
